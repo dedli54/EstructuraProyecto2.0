@@ -30,6 +30,7 @@ int azar = 0;
 int clavevacunarepetido;
 char vacunaaborrar[20];
 char personaaborrar[30];
+bool mostrar = false; //mostrarcarnetbinario
 //Variables end
 
 //Struct inicio
@@ -112,6 +113,7 @@ void BuscarClaveVacunaRepetida(char usuario[15]);
 int BusquedaBinaria(int izquierda, int derecha, int buscado);
 void escribirCarnet(); void leerCarnet();
 void AgregarCarnet(Carnet* nuevo);
+void Clave(WPARAM wParam, HWND hWnd, int buscado);
 
 // las de arriba ya estan todas bien, las de abajo las tengo que programar y checar que si son las que tengo que meter
 
@@ -122,14 +124,7 @@ void AgregarCarnet(Carnet* nuevo);
 //
 //void BuscarCurpRepetido(char usuario[19]);
 //void BuscarRfcRepedito(char usuario[19]);
-//
-//
 
-//
-//
-//
-//
-//void Clave(WPARAM wParam, HWND hWnd, int buscado);
 
 
 //Funciones final
@@ -148,14 +143,15 @@ BOOL CALLBACK BORRARPERSONAS(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK EDITARPERSONAS(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK LISTAPERSONAS(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK CARNET(HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK AGREGARCARNET(HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK NUMEROCARNET(HWND, UINT, WPARAM, LPARAM);
 
 // las de arriba ya estan todas bien, las de abajo las tengo que programar y checar que si son las que tengo que meter
 
 
-BOOL CALLBACK AGREGARCARNET(HWND, UINT, WPARAM, LPARAM);
 
 
-//BOOL CALLBACK NUMEROCARNET(HWND, UINT, WPARAM, LPARAM);
+
 
 
 
@@ -916,7 +912,6 @@ BOOL CALLBACK LISTAPERSONAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	return FALSE;
 }
 
-
 BOOL CALLBACK CARNET(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	switch (msg) {
 	case WM_INITDIALOG: {
@@ -1086,6 +1081,80 @@ BOOL CALLBACK AGREGARCARNET(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	}
 	return FALSE;
 }
+
+BOOL CALLBACK NUMEROCARNET(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	switch (msg) {
+	case WM_CLOSE: {
+		escribirUsuarios();
+		escribirPersonas();
+		escribirVacunas();
+		escribirCarnet();
+		DestroyWindow(hwnd);
+	}break;
+
+	case WM_DESTROY: {
+		PostQuitMessage(117);
+	}break;
+	case WM_COMMAND: {
+		menu(wParam, hwnd);
+		switch (LOWORD(wParam)) {
+		case IDD_NUMEROCARNET_BUSCARBTN: {
+			int buscar;
+			buscar = GetDlgItemInt(hwnd, IDD_NUMEROCARNET_NUMCARNET, NULL, FALSE);
+			Clave(wParam, hwnd, buscar);
+			if (mostrar = true) {
+				SetDlgItemInt(hwnd, IDD_NUMEROCARNET_IDCARNET, (UINT)buscar, FALSE);
+				aux = inicio;
+				while (aux != nullptr && (buscar != aux->carnetid)) {
+					aux = aux->siguiente;
+				}
+				auxxxx = inicioxxx;
+				while (auxxxx != nullptr) {
+					if (strcmp(aux->nombres, auxxxx->nombres) != 0) {
+						auxxxx = auxxxx->siguiente;
+					}
+					else {
+						SendMessage(GetDlgItem(hwnd, IDD_NUMEROCARNET_LIST), LB_INSERTSTRING, 0, (LPARAM)auxxxx->clavevacuna);
+						auxxxx = auxxxx->siguiente;
+					}
+				}
+			}
+			else {
+				MessageBox(hwnd, "No se encontro", "AVISO", MB_OK | MB_ICONERROR);
+			}
+
+		}break;
+		case IDD_NUMEROCARNET_LIST: {
+			switch (HIWORD(wParam)) {
+			case LBN_DBLCLK: {
+				char textolist[20] = { 0 };
+				int indice = 0;
+				indice = SendDlgItemMessage(hwnd, IDD_NUMEROCARNET_LIST, LB_GETCURSEL, 0, 0);
+				SendDlgItemMessage(hwnd, IDD_NUMEROCARNET_LIST, LB_GETTEXT, indice, (LPARAM)textolist);
+				auxxxx = inicioxxx;
+				while (auxxxx->siguiente != nullptr && strcmp(textolist, auxxxx->clavevacuna) != 0) {
+					auxxxx = auxxxx->siguiente;
+				}
+				SetDlgItemText(hwnd, IDD_NUMEROCARNET_MARCA, auxxxx->vacuna.marca);
+				SetDlgItemInt(hwnd, IDD_NUMEROCARNET_LOTE, (UINT)auxxxx->lote, FALSE);
+				SetDlgItemInt(hwnd, IDD_NUMEROCARNET_NODOSIS, (UINT)auxxxx->nodosis, FALSE);
+				SetDlgItemText(hwnd, IDD_NUMEROCARNET_APLDIA, auxxxx->fechaDosis.dia);
+				SetDlgItemText(hwnd, IDD_NUMEROCARNET_APLMES, auxxxx->fechaDosis.mes);
+				SetDlgItemText(hwnd, IDD_NUMEROCARNET_APLANIO, auxxxx->fechaDosis.anio);
+				SetDlgItemText(hwnd, IDD_NUMEROCARNET_CENTRO, auxxxx->CentroVacuna);
+				SetDlgItemText(hwnd, IDD_NUMEROCARNET_SIGDIA, auxxxx->fechaprox.dia);
+				SetDlgItemText(hwnd, IDD_NUMEROCARNET_SIGMES, auxxxx->fechaprox.mes);
+				SetDlgItemText(hwnd, IDD_NUMEROCARNET_SIGANIO, auxxxx->fechaprox.anio);
+
+			}break;
+			}
+		}break;
+		}
+	}
+	}
+	return FALSE;
+}
+
 
 //Funciones WinAPi final code
 
@@ -1590,6 +1659,28 @@ void AgregarCarnet(Carnet* nuevo) {
 		strcpy_s(auxxxx->fechaprox.anio, nuevo->fechaprox.anio);
 
 	}
+}
+
+void Clave(WPARAM wParam, HWND hwnd, int buscado) {
+
+	int tamaño = 0;
+	aux = inicio;
+	while (aux != nullptr) {
+		aux = aux->siguiente;
+		tamaño++;
+	}
+
+	//regresar resultado
+	int derecha = tamaño;
+	int respuesta = BusquedaBinaria(0, derecha, buscado);
+	if (respuesta == -1) {
+		mostrar = false;
+	}
+	else {
+		MessageBox(hWnd, "Encontrado", "AVISO", MB_OK | MB_ICONWARNING);
+		mostrar = true;
+	}
+
 }
 
 //Funciones final code
