@@ -640,7 +640,7 @@ BOOL CALLBACK LISTAVACUNAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	return FALSE;
 }
 
-BOOL CALLBACK BORRARPERSONAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+BOOL CALLBACK BORRARPERSONAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) { //idd dialog 1 
 	switch (msg) {
 	case WM_INITDIALOG: {
 		aux = inicio;
@@ -848,7 +848,6 @@ BOOL CALLBACK EDITARPERSONAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 	}
 	return FALSE;
 }
-
 
 BOOL CALLBACK LISTAPERSONAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	switch (msg) {

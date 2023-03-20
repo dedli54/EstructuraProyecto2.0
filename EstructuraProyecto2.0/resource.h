@@ -14,6 +14,7 @@
 #define IDD_DIALOG1                     118
 #define IDD_EDITARPERSONAS              120
 #define IDD_LISTAPERSONAS               123
+#define IDD_CARNET                      124
 #define INICIARSESION_USUARIO           1001
 #define INICIARSESION_CONTR             1002
 #define BTN_REGISTRARSE_REGISTRO        1003
@@ -138,6 +139,40 @@
 #define IDC_LISTAP_PERFILRIESGO         1101
 #define IDC_LISTAP_BITMAP               1102
 #define IDC_LISTAP_CARNETBTN            1103
+#define IDD_CARNET_REGRESARBTN          1104
+#define IDD_CARNET_APELLIDOPATERNO      1105
+#define IDD_CARNET_APELLIDOMATERNO      1106
+#define IDD_CARNET_NOMBRES              1107
+#define IDD_CARNET_CURP                 1108
+#define IDC_CARNET_RFC                  1109
+#define IDD_CARNET_RFC                  1109
+#define IDD_CARNET_DIA                  1110
+#define IDD_CARNET_MES                  1111
+#define IDD_CARNET_ANIO                 1112
+#define IDD_CARNET_CALLE                1113
+#define IDD_CARNET_COLONIA              1114
+#define IDD_CARNET_CIUDAD               1115
+#define IDD_CARNET_ESTADO               1116
+#define IDD_CARNET_ESTADOCIVIL          1117
+#define IDD_CARNET_PRETELEFONO          1118
+#define IDD_CARNET_TELEFONO             1119
+#define IDD_CARNET_SEXO                 1120
+#define IDD_CARNET_GRUPOOCUPACIONAL     1121
+#define IDD_CARNET_PERFILRIESGO         1122
+#define IDD_CARNET_BITMAP               1123
+#define IDD_CARNET_IDCARNET             1124
+#define IDD_CARNET_DOSIS                1125
+#define IDD_CARNET_LOTE                 1126
+#define IDD_CARNET_MARCA                1127
+#define IDD_CARNET_DIAAPLICACION        1128
+#define IDD_CARNET_ANIOAPLICACION       1129
+#define IDD_CARNET_MESAPLICACION        1130
+#define IDD_CARNET_CENTRO               1131
+#define IDD_CARNET_DIASIG               1132
+#define IDD_CARNET_ANIOSIG              1133
+#define IDD_CARNET_MESSIG               1134
+#define IDD_CARNET_LISTA                1135
+#define IDD_CARNET_AGREGARBTN           1136
 #define ID_REGISTRAR_PERSONAS           40001
 #define ID_REGISTRAR_VACUNAS            40002
 #define ID_REGISTRO_PERSONAS            40003
@@ -160,7 +195,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        124
 #define _APS_NEXT_COMMAND_VALUE         40016
-#define _APS_NEXT_CONTROL_VALUE         1104
+#define _APS_NEXT_CONTROL_VALUE         1137
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
