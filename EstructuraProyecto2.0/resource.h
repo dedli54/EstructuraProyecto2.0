@@ -13,8 +13,10 @@
 #define IDD_LISTVACUNAS                 116
 #define IDD_DIALOG1                     118
 #define IDD_EDITARPERSONAS              120
+#define IDD_AGREGARCARNET               120
 #define IDD_LISTAPERSONAS               123
 #define IDD_CARNET                      124
+#define IDD_EDITARPERSONAS1             125
 #define INICIARSESION_USUARIO           1001
 #define INICIARSESION_CONTR             1002
 #define BTN_REGISTRARSE_REGISTRO        1003
@@ -108,6 +110,8 @@
 #define IDD_EDITARPERSONAS_DIA          1070
 #define IDD_EDITARPERSONAS_RFC          1071
 #define IDD_EDITARPERSONAS_CIUDAD       1072
+#define IDD_EDITARPERSONAS_RFC2         1072
+#define IDD_AGREGARCARNET_CLAVE         1072
 #define IDD_EDITARPERSONAS_COLONIA      1073
 #define IDD_EDITARPERSONAS_ESTADO       1074
 #define IDD_EDITARPERSONAS_ESTADOCIVIL  1075
@@ -144,7 +148,6 @@
 #define IDD_CARNET_APELLIDOMATERNO      1106
 #define IDD_CARNET_NOMBRES              1107
 #define IDD_CARNET_CURP                 1108
-#define IDC_CARNET_RFC                  1109
 #define IDD_CARNET_RFC                  1109
 #define IDD_CARNET_DIA                  1110
 #define IDD_CARNET_MES                  1111
@@ -173,6 +176,18 @@
 #define IDD_CARNET_MESSIG               1134
 #define IDD_CARNET_LISTA                1135
 #define IDD_CARNET_AGREGARBTN           1136
+#define IDD_AGREGARCARNET_LOTE          1137
+#define IDD_AGREGARCARNET_AGREGARBTN    1138
+#define IDD_AGREGARCARNET_CENTRO        1139
+#define IDD_AGREGARCARNET_PROXDIA       1140
+#define IDD_AGREGARCARNET_PROXMES       1141
+#define IDD_AGREGARCARNET_PROXANIO      1142
+#define IDD_AGREGARCARNET_FECHA         1143
+#define IDD_AGREGARCARNET_DOSIS         1144
+#define IDD_AGREGARCARNET_MARCAA        1145
+#define IDD_AGREGARCARNET_CURP          1146
+#define IDD_AGREGARCARNET_NOMBRE        1147
+#define IDD_AGREGARCARNET_LIST          1148
 #define ID_REGISTRAR_PERSONAS           40001
 #define ID_REGISTRAR_VACUNAS            40002
 #define ID_REGISTRO_PERSONAS            40003
@@ -195,7 +210,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        124
 #define _APS_NEXT_COMMAND_VALUE         40016
-#define _APS_NEXT_CONTROL_VALUE         1137
+#define _APS_NEXT_CONTROL_VALUE         1149
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

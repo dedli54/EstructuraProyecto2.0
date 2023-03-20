@@ -111,6 +111,7 @@ void BuscarUsuarioRepetido(char usuario[50]);
 void BuscarClaveVacunaRepetida(char usuario[15]);
 int BusquedaBinaria(int izquierda, int derecha, int buscado);
 void escribirCarnet(); void leerCarnet();
+void AgregarCarnet(Carnet* nuevo);
 
 // las de arriba ya estan todas bien, las de abajo las tengo que programar y checar que si son las que tengo que meter
 
@@ -123,7 +124,7 @@ void escribirCarnet(); void leerCarnet();
 //void BuscarRfcRepedito(char usuario[19]);
 //
 //
-//void AgregarCarnet(Carnet* nuevo);
+
 //
 //
 //
@@ -151,12 +152,9 @@ BOOL CALLBACK CARNET(HWND, UINT, WPARAM, LPARAM);
 // las de arriba ya estan todas bien, las de abajo las tengo que programar y checar que si son las que tengo que meter
 
 
+BOOL CALLBACK AGREGARCARNET(HWND, UINT, WPARAM, LPARAM);
 
 
-
-
-//BOOL CALLBACK AGREGARCARNET(HWND, UINT, WPARAM, LPARAM);
-//
 //BOOL CALLBACK NUMEROCARNET(HWND, UINT, WPARAM, LPARAM);
 
 
@@ -918,6 +916,7 @@ BOOL CALLBACK LISTAPERSONAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	return FALSE;
 }
 
+
 BOOL CALLBACK CARNET(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	switch (msg) {
 	case WM_INITDIALOG: {
@@ -1006,6 +1005,88 @@ BOOL CALLBACK CARNET(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	}
 	return FALSE;
 }
+
+BOOL CALLBACK AGREGARCARNET(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	switch (msg) {
+	case WM_INITDIALOG: {
+		auxxx = inicioxx;
+		while (auxxx != nullptr) {
+			SendMessage(GetDlgItem(hwnd, IDD_AGREGARCARNET_LIST), LB_INSERTSTRING, 0, (LPARAM)auxxx->clavevacuna);
+			auxxx = auxxx->siguiente;
+		}
+		SetDlgItemText(hwnd, IDD_AGREGARCARNET_NOMBRE, aux->nombres);
+		SetDlgItemText(hwnd, IDD_AGREGARCARNET_CURP, aux->curp);
+		SetDlgItemText(hwnd, IDD_AGREGARCARNET_PROXDIA, "00");
+		SetDlgItemText(hwnd, IDD_AGREGARCARNET_PROXMES, "00");
+		SetDlgItemText(hwnd, IDD_AGREGARCARNET_PROXANIO, "0000");
+	}break;
+	case WM_CLOSE: {
+		escribirUsuarios();
+		escribirPersonas();
+		escribirVacunas();
+		escribirCarnet();
+		DestroyWindow(hwnd);
+	}break;
+
+	case WM_DESTROY: {
+		PostQuitMessage(117);
+	}break;
+	case WM_COMMAND: {
+		switch (LOWORD(wParam)) {
+		case IDD_AGREGARCARNET_LIST: {
+			switch (HIWORD(wParam)) {
+			case LBN_DBLCLK: {
+				char textolist[20] = { 0 };
+				int indice = 0;
+				indice = SendDlgItemMessage(hwnd, IDD_AGREGARCARNET_LIST, LB_GETCURSEL, 0, 0);
+				SendDlgItemMessage(hwnd, IDD_AGREGARCARNET_LIST, LB_GETTEXT, indice, (LPARAM)textolist);
+				auxxx = inicioxx;
+				while (auxxx->siguiente != nullptr && strcmp(textolist, auxxx->clavevacuna) != 0) {
+					auxxx = auxxx->siguiente;
+				}
+
+				SetDlgItemText(hwnd, IDD_AGREGARCARNET_CLAVE, auxxx->clavevacuna);
+				SetDlgItemInt(hwnd, IDD_AGREGARCARNET_DOSIS, (UINT)auxxx->nodosis, FALSE);
+				SetDlgItemText(hwnd, IDD_AGREGARCARNET_MARCAA, auxxx->marca);
+
+			}break;
+			}
+
+
+		}break;
+		case IDD_AGREGARCARNET_AGREGARBTN: {
+			Carnet* nodouse = new Carnet;
+			SYSTEMTIME fechaDosis;
+			ZeroMemory(&fechaDosis, sizeof(fechaDosis));
+			SendDlgItemMessage(hwnd, IDD_AGREGARCARNET_FECHA, DTM_GETSYSTEMTIME, 0, (LPARAM)&fechaDosis);
+			sprintf_s(nodouse->fechaDosis.dia, "%d", fechaDosis.wDay);
+			sprintf_s(nodouse->fechaDosis.mes, "%d", fechaDosis.wMonth);
+			sprintf_s(nodouse->fechaDosis.anio, "%d", fechaDosis.wYear);
+
+			GetDlgItemText(hwnd, IDD_AGREGARCARNET_NOMBRE, nodouse->nombres, 30);
+			GetDlgItemText(hwnd, IDD_AGREGARCARNET_CURP, nodouse->curp, 19);
+			GetDlgItemText(hwnd, IDD_AGREGARCARNET_MARCAA, nodouse->vacuna.marca, 15);
+			GetDlgItemText(hwnd, IDD_AGREGARCARNET_CLAVE, nodouse->clavevacuna, 15);
+			nodouse->nodosis = GetDlgItemInt(hwnd, IDD_AGREGARCARNET_DOSIS, NULL, FALSE);
+			GetDlgItemText(hwnd, IDD_AGREGARCARNET_CENTRO, nodouse->CentroVacuna, 10);
+			int azare = rand() % 1000 + 1;
+			nodouse->lote = azare;
+
+			GetDlgItemText(hwnd, IDD_AGREGARCARNET_PROXDIA, nodouse->fechaprox.dia, 5);
+			GetDlgItemText(hwnd, IDD_AGREGARCARNET_PROXMES, nodouse->fechaprox.mes, 5);
+			GetDlgItemText(hwnd, IDD_AGREGARCARNET_PROXANIO, nodouse->fechaprox.anio, 5);
+
+			AgregarCarnet(nodouse);
+			EndDialog(hwnd, 0);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_REGISTROPERSONAS), hwnd, REGISTROPERSONAS);
+		}break;
+		}
+
+	}
+	}
+	return FALSE;
+}
+
 //Funciones WinAPi final code
 
 //Funciones inicio code
@@ -1461,6 +1542,56 @@ void leerCarnet() {
 		leerCarnet.close();
 	}
 }
+
+
+void AgregarCarnet(Carnet* nuevo) {
+	if (inicioxxx == nullptr) {
+		inicioxxx = new Carnet;
+		auxxxx = inicioxxx;
+		auxxxx->anterior = nullptr;
+		auxxxx->siguiente = nullptr;
+		strcpy_s(auxxxx->curp, nuevo->curp);
+		strcpy_s(auxxxx->clavevacuna, nuevo->clavevacuna);
+		strcpy_s(auxxxx->CentroVacuna, nuevo->CentroVacuna);
+		auxxxx->nodosis = nuevo->nodosis;
+		auxxxx->lote = nuevo->lote;
+		strcpy_s(auxxxx->fechaDosis.dia, nuevo->fechaDosis.dia);
+		strcpy_s(auxxxx->fechaDosis.mes, nuevo->fechaDosis.mes);
+		strcpy_s(auxxxx->fechaDosis.anio, nuevo->fechaDosis.anio);
+		strcpy_s(auxxxx->nombres, nuevo->nombres);
+		strcpy_s(auxxxx->vacuna.marca, nuevo->vacuna.marca);
+		strcpy_s(auxxxx->fechaprox.dia, nuevo->fechaprox.dia);
+		strcpy_s(auxxxx->fechaprox.mes, nuevo->fechaprox.mes);
+		strcpy_s(auxxxx->fechaprox.anio, nuevo->fechaprox.anio);
+
+	}
+	else {
+		auxxxx = inicioxxx;
+		while (auxxxx->siguiente != nullptr) {
+			auxxxx = auxxxx->siguiente;
+		}
+		auxxxx->siguiente = new Carnet;
+		auxxxx->siguiente->siguiente = nullptr;
+		auxxxx->siguiente->anterior = auxxxx;
+		auxxxx = auxxxx->siguiente;
+		finxxx = auxxxx;
+		strcpy_s(auxxxx->curp, nuevo->curp);
+		strcpy_s(auxxxx->clavevacuna, nuevo->clavevacuna);
+		strcpy_s(auxxxx->CentroVacuna, nuevo->CentroVacuna);
+		auxxxx->nodosis = nuevo->nodosis;
+		auxxxx->lote = nuevo->lote;
+		strcpy_s(auxxxx->fechaDosis.dia, nuevo->fechaDosis.dia);
+		strcpy_s(auxxxx->fechaDosis.mes, nuevo->fechaDosis.mes);
+		strcpy_s(auxxxx->fechaDosis.anio, nuevo->fechaDosis.anio);
+		strcpy_s(auxxxx->nombres, nuevo->nombres);
+		strcpy_s(auxxxx->vacuna.marca, nuevo->vacuna.marca);
+		strcpy_s(auxxxx->fechaprox.dia, nuevo->fechaprox.dia);
+		strcpy_s(auxxxx->fechaprox.mes, nuevo->fechaprox.mes);
+		strcpy_s(auxxxx->fechaprox.anio, nuevo->fechaprox.anio);
+
+	}
+}
+
 //Funciones final code
 
 
