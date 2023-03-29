@@ -115,15 +115,11 @@ void escribirCarnet(); void leerCarnet();
 void AgregarCarnet(Carnet* nuevo);
 void Clave(WPARAM wParam, HWND hWnd, int buscado);
 
-// las de arriba ya estan todas bien, las de abajo las tengo que programar y checar que si son las que tengo que meter
 
 
-
-
-
-//
 //void BuscarCurpRepetido(char usuario[19]);
 //void BuscarRfcRepedito(char usuario[19]);
+
 
 
 
@@ -145,17 +141,7 @@ BOOL CALLBACK LISTAPERSONAS(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK CARNET(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK AGREGARCARNET(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK NUMEROCARNET(HWND, UINT, WPARAM, LPARAM);
-
-// las de arriba ya estan todas bien, las de abajo las tengo que programar y checar que si son las que tengo que meter
-
-
-
-
-
-
-
-
-
+BOOL CALLBACK MAINMENU(HWND, UINT, WPARAM, LPARAM);
 //Funciones WinAPi final
 
 //Funciones WinAPi inicio code
@@ -190,13 +176,55 @@ void menu(WPARAM wParam, HWND hwnd) {
 		EndDialog(hwnd, 0);
 		DialogBox(instGlobal, MAKEINTRESOURCE(IDD_REGISTROVACUNAS), hwnd, REGISTROVACUNAS);
 	}break;
-	case ID_SALIR_SALIR:
-	{
+	case ID_ELIMINAR_VACUNAS: {
+		EndDialog(hwnd, 0);
+		DialogBox(instGlobal, MAKEINTRESOURCE(IDD_BAJADEVACUNAS), hwnd, BAJADEVACUNAS);
+	}break;
+	case ID_MODIFICAR_VACUNAS: {
+		EndDialog(hwnd, 0);
+		DialogBox(instGlobal, MAKEINTRESOURCE(IDD_EDITARVACUNAS), hwnd, EDITARVACUNAS);
+	}break;
+	case ID_ELIMINAR_PERSONAS: {
+		EndDialog(hwnd, 0);
+		DialogBox(instGlobal, MAKEINTRESOURCE(IDD_BORRARPERSONAS), hwnd, BORRARPERSONAS);
+	}break;
+	case ID_MODIFICAR_PERSONAS: {
+		EndDialog(hwnd, 0);
+		DialogBox(instGlobal, MAKEINTRESOURCE(IDD_EDITARPERSONAS), hwnd, EDITARPERSONAS);
+	}break;
+	case ID_LISTA_PERSONAS: {
+		EndDialog(hwnd, 0);
+		DialogBox(instGlobal, MAKEINTRESOURCE(IDD_LISTAPERSONAS), hwnd, LISTAPERSONAS);
+	}break;
+	case ID_LISTA_VACUNAS: {
+		EndDialog(hwnd, 0);
+		DialogBox(instGlobal, MAKEINTRESOURCE(IDD_LISTVACUNAS), hwnd, LISTAVACUNAS);
+	}break;
+	case ID_CARNET_NUMERO: {
+		EndDialog(hwnd, 0);
+		DialogBox(instGlobal, MAKEINTRESOURCE(IDD_NUMEROCARNET), hwnd, NUMEROCARNET);
+	}break;
+	case ID_SALIR: {
 		escribirUsuarios();
 		escribirPersonas();
 		escribirVacunas();
-
+		escribirCarnet();
 		DestroyWindow(hwnd);
+	}break;
+	
+	case ID_MAINMENU: {
+		EndDialog(hwnd, 0);
+		DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, MAINMENU);
+	}break;
+	case ID_REGISTRAR_CARNET: {
+		EndDialog(hwnd, 0);
+		DialogBox(instGlobal, MAKEINTRESOURCE(IDD_CARNET), hwnd, CARNET);
+	}break;
+	case ID_REPORTE_CARNET: {
+		
+	}break;
+	case ID_REPORTE_NOMBRE: {
+	
 	}break;
 	}
 }
@@ -206,7 +234,6 @@ BOOL CALLBACK LOGIN(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	{
 	case WM_CLOSE:
 	{
-
 		escribirUsuarios();
 		escribirPersonas();
 		escribirVacunas();
@@ -248,7 +275,7 @@ BOOL CALLBACK LOGIN(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 			else
 			{
 				EndDialog(hwnd, 0);
-				DialogBox(instGlobal, MAKEINTRESOURCE(IDD_REGISTROPERSONAS), hwnd, REGISTROPERSONAS);
+				DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, MAINMENU);
 			}
 		}break;
 		}
@@ -866,6 +893,10 @@ BOOL CALLBACK LISTAPERSONAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	case WM_COMMAND: {
 		menu(wParam, hwnd);
 		switch (LOWORD(wParam)) {
+		case IDC_LISTAP_CARNETBTN: {
+			EndDialog(hwnd, 0);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_CARNET), hwnd, CARNET);
+		}break;
 		case IDC_LISTAP_LISTA: {
 			switch (HIWORD(wParam)) {
 			case LBN_DBLCLK: {
@@ -902,10 +933,7 @@ BOOL CALLBACK LISTAPERSONAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 			}break;
 			}
 		}break;
-		case IDC_LISTAP_CARNETBTN: {
-			EndDialog(hwnd, 0);
-			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_CARNET), hwnd, CARNET);
-		}break;
+		
 		}
 	}
 	}
@@ -989,12 +1017,12 @@ BOOL CALLBACK CARNET(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		}break;
 		case IDD_CARNET_REGRESARBTN: {
 			EndDialog(hwnd, 0);
-			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_REGISTROPERSONAS), hwnd, REGISTROPERSONAS);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, MAINMENU);
 		}break;
 		case IDD_CARNET_AGREGARBTN: {
 			EndDialog(hwnd, 0);
 			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_AGREGARCARNET), hwnd, AGREGARCARNET);
-		}
+		}break;
 		}
 	}
 	}
@@ -1073,7 +1101,7 @@ BOOL CALLBACK AGREGARCARNET(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 			AgregarCarnet(nodouse);
 			EndDialog(hwnd, 0);
-			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_REGISTROPERSONAS), hwnd, REGISTROPERSONAS);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, MAINMENU);
 		}break;
 		}
 
@@ -1155,12 +1183,82 @@ BOOL CALLBACK NUMEROCARNET(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	return FALSE;
 }
 
+BOOL CALLBACK MAINMENU(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	switch (msg) {
+	case WM_CLOSE: {
+		escribirUsuarios();
+		escribirPersonas();
+		escribirVacunas();
+		escribirCarnet();
+		DestroyWindow(hwnd);
+	}break;
+	case WM_DESTROY: {
+		PostQuitMessage(117);
+	}break;
+	case WM_COMMAND: {
+		menu(wParam, hwnd);
+		switch (LOWORD(wParam))
+		{
+		case IDC_MENU_REGP: {
+			EndDialog(hwnd, 0);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_REGISTROPERSONAS), hwnd, REGISTROPERSONAS);
+		}break;
+		case IDC_MENU_REGV: {
+			EndDialog(hwnd, 0);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_REGISTROVACUNAS), hwnd, REGISTROVACUNAS);
+		}break;
+		case IDC_MENU_MODP: {
+			EndDialog(hwnd, 0);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_EDITARPERSONAS), hwnd, EDITARPERSONAS);
+		}break;
+		case IDC_MENU_MODV: {
+			EndDialog(hwnd, 0);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_EDITARVACUNAS), hwnd, EDITARVACUNAS);
+		}break;
+		case IDC_MENU_DELETEP: {
+			EndDialog(hwnd, 0);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_BORRARPERSONAS), hwnd, BORRARPERSONAS);
+		}break;
+		case IDC_MENU_DELETEV: {
+			EndDialog(hwnd, 0);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_BAJADEVACUNAS), hwnd, BAJADEVACUNAS);
+		}break;
+		case IDC_MENU_CARNET: {
+			EndDialog(hwnd, 0);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_NUMEROCARNET), hwnd, NUMEROCARNET);
+		}break;
+		case IDC_MENU_LISTAP: {
+			EndDialog(hwnd, 0);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_LISTAPERSONAS), hwnd, LISTAPERSONAS);
+		}break;
+		case IDC_MENU_LISTAV: {
+			EndDialog(hwnd, 0);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_LISTVACUNAS), hwnd, LISTAVACUNAS);
+		}break;
+		case IDC_MENU_SALIR: {
+			escribirUsuarios();
+			escribirPersonas();
+			escribirVacunas();
+			escribirCarnet();
+			DestroyWindow(hwnd);
+		}break;
+		}
+		{
+		default:
+			break;
+		}
+	}break;
+
+	}
+	return FALSE;
+}
+
 
 //Funciones WinAPi final code
 
 //Funciones inicio code
-
-void AgregarPersona(RegistroPersonas* nuevo)
+ void AgregarPersona(RegistroPersonas* nuevo)
 {
 	if (inicio == nullptr)
 	{
@@ -1682,6 +1780,10 @@ void Clave(WPARAM wParam, HWND hwnd, int buscado) {
 	}
 
 }
+
+
+
+
 
 //Funciones final code
 

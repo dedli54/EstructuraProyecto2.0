@@ -12,12 +12,12 @@
 #define IDD_EDITARVACUNAS               114
 #define IDD_LISTVACUNAS                 116
 #define IDD_DIALOG1                     118
+#define IDD_BORRARPERSONAS              118
 #define IDD_EDITARPERSONAS              120
-#define IDD_AGREGARCARNET               120
 #define IDD_LISTAPERSONAS               123
 #define IDD_CARNET                      124
-#define IDD_EDITARPERSONAS1             125
 #define IDD_NUMEROCARNET                126
+#define IDD_AGREGARCARNET               127
 #define INICIARSESION_USUARIO           1001
 #define INICIARSESION_CONTR             1002
 #define BTN_REGISTRARSE_REGISTRO        1003
@@ -111,7 +111,6 @@
 #define IDD_EDITARPERSONAS_DIA          1070
 #define IDD_EDITARPERSONAS_RFC          1071
 #define IDD_EDITARPERSONAS_CIUDAD       1072
-#define IDD_AGREGARCARNET_CLAVE         1072
 #define IDD_EDITARPERSONAS_COLONIA      1073
 #define IDD_EDITARPERSONAS_ESTADO       1074
 #define IDD_EDITARPERSONAS_ESTADOCIVIL  1075
@@ -120,6 +119,7 @@
 #define IDD_EDITARPERSONAS_SEXO         1078
 #define IDD_EDITARPERSONAS_GRUPOOCUPACIONAL 1079
 #define IDD_EDITARPERSONAS_PERFILRIESGO 1080
+#define IDD_AGREGARCARNET_MARCAA        1080
 #define IDD_EDITARPERSONAS_MODIFICARIMAGENBTN 1081
 #define IDD_EDITARPERSONAS_FOTO         1082
 #define IDC_LISTAP_APELLIDOPATERNO      1084
@@ -176,18 +176,6 @@
 #define IDD_CARNET_MESSIG               1134
 #define IDD_CARNET_LISTA                1135
 #define IDD_CARNET_AGREGARBTN           1136
-#define IDD_AGREGARCARNET_LOTE          1137
-#define IDD_AGREGARCARNET_AGREGARBTN    1138
-#define IDD_AGREGARCARNET_CENTRO        1139
-#define IDD_AGREGARCARNET_PROXDIA       1140
-#define IDD_AGREGARCARNET_PROXMES       1141
-#define IDD_AGREGARCARNET_PROXANIO      1142
-#define IDD_AGREGARCARNET_FECHA         1143
-#define IDD_AGREGARCARNET_DOSIS         1144
-#define IDD_AGREGARCARNET_MARCAA        1145
-#define IDD_AGREGARCARNET_CURP          1146
-#define IDD_AGREGARCARNET_NOMBRE        1147
-#define IDD_AGREGARCARNET_LIST          1148
 #define IDD_NUMEROCARNET_BUSCARBTN      1149
 #define IDD_NUMEROCARNET_NUMCARNET      1150
 #define IDD_NUMEROCARNET_IDCARNET       1151
@@ -202,6 +190,31 @@
 #define IDD_NUMEROCARNET_SIGMES         1160
 #define IDD_NUMEROCARNET_SIGANIO        1161
 #define IDD_NUMEROCARNET_LIST           1162
+#define IDD_AGREGARCARNET_LIST          1163
+#define IDD_AGREGARCARNET_NOMBRE        1164
+#define IDD_AGREGARCARNET_CURP          1165
+#define IDD_AGREGARCARNET_LOTE          1166
+#define IDD_AGREGARCARNET_CENTRO        1167
+#define IDD_AGREGARCARNET_PROXDIA       1168
+#define IDD_AGREGARCARNET_PROXMES       1169
+#define IDD_AGREGARCARNET_PROXANIO      1170
+#define IDD_AGREGARCARNET_FECHA         1171
+#define IDD_AGREGARCARNET_DOSIS         1172
+#define IDD_AGREGARCARNET_CLAVE         1173
+#define IDD_AGREGARCARNET_AGREGARBTN    1174
+#define IDC_MENU_REGP                   1175
+#define IDC_BUTTON2                     1176
+#define IDC_MENU_REGV                   1176
+#define IDC_MENU_MODP                   1179
+#define IDC_MENU_MODV                   1180
+#define IDC_MENU_DELETEP                1181
+#define IDC_MENU_DELETEV                1182
+#define IDC_MENU_CARNET                 1183
+#define IDC_MENU_REPORTENOM             1184
+#define IDC_MENU_REPORTECAR             1185
+#define IDC_MENU_SALIR                  1186
+#define IDC_MENU_LISTAV                 1187
+#define IDC_MENU_LISTAP                 1188
 #define ID_REGISTRAR_PERSONAS           40001
 #define ID_REGISTRAR_VACUNAS            40002
 #define ID_REGISTRO_PERSONAS            40003
@@ -217,14 +230,18 @@
 #define ID_LISTA_VACUNAS                40013
 #define ID_REPORTE_NOMBRE               40014
 #define ID_REPORTE_CARNET               40015
+#define ID_SALIR                        40016
+#define ID_MAINMENU                     40017
+#define ID_REGISTRAR_CARNET             40018
+#define ID_CARNET_CARNET                40019
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        124
-#define _APS_NEXT_COMMAND_VALUE         40016
-#define _APS_NEXT_CONTROL_VALUE         1163
+#define _APS_NEXT_COMMAND_VALUE         40020
+#define _APS_NEXT_CONTROL_VALUE         1177
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
