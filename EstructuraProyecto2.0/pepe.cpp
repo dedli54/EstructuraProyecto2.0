@@ -33,7 +33,7 @@ char personaaborrar[30];
 bool mostrar = false; //mostrarcarnetbinario
 int curprepetido;
 int rfcrepetido;
-int a;
+
 //Variables end
 
 //Struct inicio
