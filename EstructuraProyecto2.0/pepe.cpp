@@ -31,6 +31,9 @@ int clavevacunarepetido;
 char vacunaaborrar[20];
 char personaaborrar[30];
 bool mostrar = false; //mostrarcarnetbinario
+int curprepetido;
+int rfcrepetido;
+int a;
 //Variables end
 
 //Struct inicio
@@ -114,11 +117,22 @@ int BusquedaBinaria(int izquierda, int derecha, int buscado);
 void escribirCarnet(); void leerCarnet();
 void AgregarCarnet(Carnet* nuevo);
 void Clave(WPARAM wParam, HWND hWnd, int buscado);
+//void secuencial(char nombres[30]);
+
+
+int contarNombres();
+void ArregloNombre(RegistroPersonas R[], int tamaño);
+void quickSort(RegistroPersonas R[], int left, int right);
+void ArregloCarnet(RegistroPersonas R[], int tamaño);
+void OrdenarCarnet(RegistroPersonas R[], int may, int men);
+void heapSort(RegistroPersonas R[], int may);
+void escribirTxtNombre(WPARAM wParam, HWND hWnd, int contadorNOMBRE, RegistroPersonas* arreglo);
+void escribirTxtCarnet(WPARAM wParam, HWND hWnd, int contadorNOMBRE, RegistroPersonas* arreglo);
 
 
 
-//void BuscarCurpRepetido(char usuario[19]);
-//void BuscarRfcRepedito(char usuario[19]);
+void BuscarCurpRepetido(char usuario[19]);
+void BuscarRfcRepedito(char usuario[19]);
 
 
 
@@ -221,10 +235,23 @@ void menu(WPARAM wParam, HWND hwnd) {
 		DialogBox(instGlobal, MAKEINTRESOURCE(IDD_CARNET), hwnd, CARNET);
 	}break;
 	case ID_REPORTE_CARNET: {
-		
+		int contadorCARNET = contarNombres();
+		RegistroPersonas* arreglo = new RegistroPersonas[contadorCARNET]; //mi puntero es igual a mi arreglo de carnet
+		ArregloCarnet(arreglo, contadorCARNET);
+		heapSort(arreglo, contadorCARNET);
+		escribirTxtCarnet(wParam, hWnd, contadorCARNET, arreglo);
+		delete[] arreglo;
+		MessageBox(hWnd, "Reporte carnet guardado", "AVISO", MB_OK | MB_ICONINFORMATION);
+
 	}break;
 	case ID_REPORTE_NOMBRE: {
-	
+		int contadorNOMBRE = contarNombres();
+		RegistroPersonas* arregloquick = new RegistroPersonas[contadorNOMBRE]; //mi puntero es igual a mi arreglo de carnet
+		ArregloNombre(arregloquick, contadorNOMBRE);
+		quickSort(arregloquick, 0, contadorNOMBRE - 1);
+		escribirTxtNombre(wParam, hWnd, contadorNOMBRE, arregloquick);
+		delete[] arregloquick;
+		MessageBox(hWnd, "Reporte nombres guardado", "AVISO", MB_OK | MB_ICONINFORMATION);
 	}break;
 	}
 }
@@ -396,9 +423,16 @@ BOOL CALLBACK REGISTROPERSONAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
 				aux = aux->siguiente;
 			}
 			nodouse->carnetid = azar;
+			BuscarCurpRepetido(nodouse->curp);
+			BuscarRfcRepedito(nodouse->rfc);
+			if (curprepetido == 0 && rfcrepetido == 0) {
 				AgregarPersona(nodouse);
 				MessageBox(hwnd, "Persona registrada.", "AVISO", MB_OK | MB_ICONINFORMATION);
-		cuantashay++;
+			}
+			else {
+				MessageBox(hwnd, "Curp o Rfc repetido.", "AVISO", MB_OK | MB_ICONERROR);
+			}
+			cuantashay++;
 		}break;
 		case IDC_REGISTROPERSONAS_CARGARFOTOBTN: {
 			OPENFILENAME ofn;
@@ -1126,6 +1160,37 @@ BOOL CALLBACK NUMEROCARNET(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	case WM_COMMAND: {
 		menu(wParam, hwnd);
 		switch (LOWORD(wParam)) {
+		/*case IDD_NUMEROCARNET_SEC:
+		{
+			if (inicioxxx == NULL) {
+				MessageBox(NULL, L"No hay carnets registrados", L"", MB_ICONERROR);
+				break;
+			}
+
+			char CURPtemp[50];
+			SendMessage(GetDlgItem(hParentDialog, IDD_NUMEROCARNET_SECUE), WM_GETTEXT, sizeof(CURPtemp) / sizeof(CURPtemp[0]), (LPARAM)CURPtemp);
+
+			bool DatosRepetido = false;
+			Carnet* auxxxx = inicioxxx;
+			if (inicioxxx != NULL) {
+				do {
+					if ((wcscmp(CURPtemp, auxxxx->curp) == 0)) {
+						DatosRepetido = true;
+						
+						break;
+					}
+					auxxxx = auxxxx->siguiente;
+				} while (auxxxx != inicioxxx);
+
+				if (DatosRepetido == false) {
+					MessageBox(NULL, L"Datos incorrectos", L"", MB_ICONERROR);
+					return FALSE;
+				}
+			}
+
+
+
+		}*/
 		case IDD_NUMEROCARNET_BUSCARBTN: {
 			int buscar;
 			buscar = GetDlgItemInt(hwnd, IDD_NUMEROCARNET_NUMCARNET, NULL, FALSE);
@@ -1224,6 +1289,24 @@ BOOL CALLBACK MAINMENU(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			EndDialog(hwnd, 0);
 			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_BAJADEVACUNAS), hwnd, BAJADEVACUNAS);
 		}break;
+		case IDC_MENU_REPORTENOM: {
+			int contadorCARNET = contarNombres();
+			RegistroPersonas* arreglo = new RegistroPersonas[contadorCARNET]; //mi puntero es igual a mi arreglo de carnet
+			ArregloCarnet(arreglo, contadorCARNET);
+			heapSort(arreglo, contadorCARNET);
+			escribirTxtCarnet(wParam, hWnd, contadorCARNET, arreglo);
+			delete[] arreglo;
+			MessageBox(hWnd, "Reporte carnet guardado", "AVISO", MB_OK | MB_ICONINFORMATION);
+		}break;
+		case IDC_MENU_REPORTECAR: {
+				int contadorNOMBRE = contarNombres();
+				RegistroPersonas* arregloquick = new RegistroPersonas[contadorNOMBRE]; //mi puntero es igual a mi arreglo de carnet
+				ArregloNombre(arregloquick, contadorNOMBRE);
+				quickSort(arregloquick, 0, contadorNOMBRE - 1);
+				escribirTxtNombre(wParam, hWnd, contadorNOMBRE, arregloquick);
+				delete[] arregloquick;
+				MessageBox(hWnd, "Reporte nombres guardado", "AVISO", MB_OK | MB_ICONINFORMATION);
+			}break;
 		case IDC_MENU_CARNET: {
 			EndDialog(hwnd, 0);
 			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_NUMEROCARNET), hwnd, NUMEROCARNET);
@@ -1710,7 +1793,6 @@ void leerCarnet() {
 	}
 }
 
-
 void AgregarCarnet(Carnet* nuevo) {
 	if (inicioxxx == nullptr) {
 		inicioxxx = new Carnet;
@@ -1781,6 +1863,210 @@ void Clave(WPARAM wParam, HWND hwnd, int buscado) {
 
 }
 
+int contarNombres() {
+	aux = inicio;
+	int acum = 0;
+	while (aux != NULL) {
+		acum++;
+		aux = aux->siguiente;
+	}
+	return acum;
+}
+
+void ArregloNombre(RegistroPersonas R[], int tamaño) {
+	aux = inicio;
+	for (int i = 0; i < tamaño; i++) {
+		R[i] = *aux;
+		aux = aux->siguiente;
+	}
+}
+
+void quickSort(RegistroPersonas R[], int left, int right) {
+	int i = left, j = right;
+
+	RegistroPersonas tmp;
+
+	char pivote[150];
+
+	strcpy_s(pivote, R[(left + right) / 2].nombres);
+
+	while (i <= j)
+	{
+		while (strcmp(R[i].nombres, pivote) < 0)
+			i++;
+		while (strcmp(R[j].nombres, pivote) > 0)
+			j--;
+
+		if (i <= j) {
+			tmp = R[i];
+			R[i] = R[j];
+			R[j] = tmp;
+			i++;
+			j--;
+		}
+	}
+
+	if (left < j) //si no entran a ninguno de los ifs ya esta ordenado
+		quickSort(R, left, j);
+	if (i < right)
+		quickSort(R, i, right);
+}
+
+void ArregloCarnet(RegistroPersonas R[], int tamaño) {
+	aux = inicio; // se iguala al inicio de la lista
+
+	for (int i = 0; i < tamaño; i++) // copiar y pegar de la lista de carnet
+	{
+		R[i] = *aux;
+		aux = aux->siguiente;
+	}
+}
+
+void OrdenarCarnet(RegistroPersonas R[], int may, int men)
+{
+	RegistroPersonas temporal;
+	int MAYOR = men; //igual a la raiz
+	int izq = 2 * men + 1; //el hijo de la izquierda
+	int dere = 2 * men + 2;//el otro hijo
+
+	if (izq < may && (R[izq].carnetid > R[MAYOR].carnetid)) //
+	{
+		MAYOR = izq; //almacena el indice     
+		//si el valor izq tiene un valor mayor al de raiz
+	}
+
+	if (dere < may && (R[dere].carnetid > R[MAYOR].carnetid))
+	{
+		MAYOR = dere;
+		//lo mismo pero para el otro lado 
+	}
+
+	if (MAYOR != men) //INTERCAMBIAR LUGARES
+	{
+		temporal = R[men];
+		R[men] = R[MAYOR];
+		R[MAYOR] = temporal;
+
+		OrdenarCarnet(R, may, MAYOR); //funcion recursiva, para acomodar el arbolito
+	}
+
+}
+
+void heapSort(RegistroPersonas R[], int may)
+{
+	RegistroPersonas temporal;
+
+	for (int i = may / 2 - 1; i >= 0; i--)
+	{
+		OrdenarCarnet(R, may, i);
+	}
+
+	for (int i = may - 1; i >= 0; i--)
+	{
+
+		temporal = R[0];
+		R[0] = R[i];
+		R[i] = temporal;
+
+		OrdenarCarnet(R, i, 0);
+	}
+}
+
+void escribirTxtNombre(WPARAM wParam, HWND hWnd, int contadorNOMBRE, RegistroPersonas* arreglo) {
+	ofstream archivo;
+	archivo.open("ReporteNombres.txt");
+
+
+	for (int i = 0; i < contadorNOMBRE; i++)
+	{
+		/*string nuevotel = to_string(arreglo[i].Telefono);*/
+		archivo
+			<< "No. de Carnet: " << arreglo[i].carnetid << endl
+			<< "Nombre: " << arreglo[i].nombres << endl
+			<< "Apellido Paterno: " << arreglo[i].paterno << endl << "Apellido Materno:" << ' ' << arreglo[i].materno << endl
+			<< "CURP: " << arreglo[i].curp << endl
+			<< "RFC: " << arreglo[i].rfc << endl
+			<< "Estado: " << arreglo[i].estado << endl << "Ciudad:" << ' ' << arreglo[i].ciudad << endl << "Colonia:" << ' ' << arreglo[i].colonia << endl << "Calle:" << ' ' << arreglo[i].calle << endl
+			<< "Estado Civil: " << arreglo[i].estadocivil << endl
+			<< "Grupo Ocupacional: " << arreglo[i].grupoocupa << endl
+			<< "Perfil de riesgo: " << arreglo[i].perfilriesgo << endl
+			<< "Teléfono: " << arreglo[i].pretelefono << arreglo[i].telefono << endl << endl;
+	}
+
+
+	archivo.close();
+}
+
+void escribirTxtCarnet(WPARAM wParam, HWND hWnd, int contadorNOMBRE, RegistroPersonas* arreglo) {
+	ofstream archivo;
+	archivo.open("ReporteCarnet.txt");
+
+
+	for (int i = 0; i < contadorNOMBRE; i++)
+	{
+		/*string nuevotel = to_string(arreglo[i].Telefono);*/
+		archivo
+			<< "No. de Carnet: " << arreglo[i].carnetid << endl
+			<< "Nombre: " << arreglo[i].nombres << endl
+			<< "Apellido Paterno: " << arreglo[i].paterno << endl << "Apellido Materno:" << ' ' << arreglo[i].materno << endl
+			<< "CURP: " << arreglo[i].curp << endl
+			<< "RFC: " << arreglo[i].rfc << endl
+			<< "Estado: " << arreglo[i].estado << endl << "Ciudad:" << ' ' << arreglo[i].ciudad << endl << "Colonia:" << ' ' << arreglo[i].colonia << endl << "Calle:" << ' ' << arreglo[i].calle << endl
+			<< "Estado Civil: " << arreglo[i].estadocivil << endl
+			<< "Grupo Ocupacional: " << arreglo[i].grupoocupa << endl
+			<< "Perfil de riesgo: " << arreglo[i].perfilriesgo << endl
+			<< "Teléfono: " << arreglo[i].pretelefono << arreglo[i].telefono << endl << endl;
+	}
+
+
+	archivo.close();
+}
+
+void BuscarCurpRepetido(char usuario[19]) {
+	curprepetido = 0;
+	aux = inicio;
+	if (inicio == nullptr) {
+		curprepetido = 0;
+	}
+	while (aux != nullptr && strcmp(aux->curp, usuario) != 0) {
+		aux = aux->siguiente;
+	}
+	if (aux == nullptr) {
+		curprepetido = 0;
+	}
+	else {
+		curprepetido = 1;
+	}
+}
+
+void BuscarRfcRepedito(char usuario[19]) {
+	rfcrepetido = 0;
+	aux = inicio;
+	if (inicio == nullptr) {
+		rfcrepetido = 0;
+	}
+	while (aux != nullptr && strcmp(aux->rfc, usuario) != 0) {
+		aux = aux->siguiente;
+	}
+	if (aux == nullptr) {
+		rfcrepetido = 0;
+	}
+	else {
+		rfcrepetido = 1;
+	}
+}
+
+
+//void secuencial(char nombres[30]) {
+//	auxxxx = inicioxxx;
+//	while (auxxxx != nullptr && strcmp(auxxxx->nombres, nombres) != 0) {
+//		auxxxx = auxxxx->siguiente;
+//	}
+//	if (auxx == nullptr) {
+//		return secuencial;
+//	}
+//}
+//
 
 
 

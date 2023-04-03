@@ -1,0 +1,15 @@
+No. de Carnet: 41
+Nombre: Alberto Adrian
+Apellido Paterno: Garcia
+Apellido Materno: Camacho
+CURP: fsd
+RFC: fsd
+Estado: fdsds
+Ciudad: 12
+Colonia: 12
+Calle: 321
+Estado Civil: fsd
+Grupo Ocupacional: gffd
+Perfil de riesgo: fd
+Teléfono: 00
+
