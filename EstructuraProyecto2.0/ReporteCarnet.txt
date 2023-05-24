@@ -13,3 +13,19 @@ Grupo Ocupacional: gffd
 Perfil de riesgo: fd
 Teléfono: 00
 
+testNo. de Carnet: 467
+Nombre: juan
+Apellido Paterno: jose
+Apellido Materno: maria
+CURP: 1234243
+RFC: rfcc232
+Estado: jalisco
+Ciudad: gdl
+Colonia: lagos
+Calle: siempr viva
+Estado Civil: soltero
+Grupo Ocupacional: Estudiante
+Perfil de riesgo: no
+Teléfono: 5284628573
+
+test

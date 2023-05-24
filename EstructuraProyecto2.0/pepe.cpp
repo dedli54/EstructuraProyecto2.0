@@ -571,7 +571,7 @@ BOOL CALLBACK BAJADEVACUNAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 			}
 			MessageBox(hwnd, "Vacuna eliminada", "AVISO", MB_OK | MB_ICONEXCLAMATION);
 			EndDialog(hwnd, 0);
-			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_REGISTROPERSONAS), hwnd, REGISTROPERSONAS);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, REGISTROPERSONAS);
 
 		}break;
 		}
@@ -635,7 +635,7 @@ BOOL CALLBACK EDITARVACUNAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 			MessageBox(hwnd, "Informacion modificada", "AVISO", MB_OK | MB_ICONEXCLAMATION);
 			EndDialog(hwnd, 0);
-			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_REGISTROPERSONAS), hwnd, REGISTROPERSONAS);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, REGISTROPERSONAS);
 
 		}break;
 		}
@@ -774,7 +774,7 @@ BOOL CALLBACK BORRARPERSONAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 			cuantashay = cuantashay - 1;
 			MessageBox(hwnd, "Persona eliminada", "AVISO", MB_OK | MB_ICONEXCLAMATION);
 			EndDialog(hwnd, 0);
-			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_REGISTROPERSONAS), hwnd, REGISTROPERSONAS);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, REGISTROPERSONAS);
 
 		}break;
 		}
@@ -869,7 +869,7 @@ BOOL CALLBACK EDITARPERSONAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 			strcpy_s(aux->foto, copiarfoto);
 			MessageBox(hwnd, "Informacion modificada", "AVISO", MB_OK | MB_ICONEXCLAMATION);
 			EndDialog(hwnd, 0);
-			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_REGISTROPERSONAS), hwnd, REGISTROPERSONAS);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, REGISTROPERSONAS);
 		}break;
 		case IDD_EDITARPERSONAS_MODIFICARIMAGENBTN: {
 			OPENFILENAME ofn;
@@ -1160,37 +1160,6 @@ BOOL CALLBACK NUMEROCARNET(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	case WM_COMMAND: {
 		menu(wParam, hwnd);
 		switch (LOWORD(wParam)) {
-		/*case IDD_NUMEROCARNET_SEC:
-		{
-			if (inicioxxx == NULL) {
-				MessageBox(NULL, L"No hay carnets registrados", L"", MB_ICONERROR);
-				break;
-			}
-
-			char CURPtemp[50];
-			SendMessage(GetDlgItem(hParentDialog, IDD_NUMEROCARNET_SECUE), WM_GETTEXT, sizeof(CURPtemp) / sizeof(CURPtemp[0]), (LPARAM)CURPtemp);
-
-			bool DatosRepetido = false;
-			Carnet* auxxxx = inicioxxx;
-			if (inicioxxx != NULL) {
-				do {
-					if ((wcscmp(CURPtemp, auxxxx->curp) == 0)) {
-						DatosRepetido = true;
-						
-						break;
-					}
-					auxxxx = auxxxx->siguiente;
-				} while (auxxxx != inicioxxx);
-
-				if (DatosRepetido == false) {
-					MessageBox(NULL, L"Datos incorrectos", L"", MB_ICONERROR);
-					return FALSE;
-				}
-			}
-
-
-
-		}*/
 		case IDD_NUMEROCARNET_BUSCARBTN: {
 			int buscar;
 			buscar = GetDlgItemInt(hwnd, IDD_NUMEROCARNET_NUMCARNET, NULL, FALSE);
@@ -2015,7 +1984,7 @@ void escribirTxtCarnet(WPARAM wParam, HWND hWnd, int contadorNOMBRE, RegistroPer
 			<< "Estado Civil: " << arreglo[i].estadocivil << endl
 			<< "Grupo Ocupacional: " << arreglo[i].grupoocupa << endl
 			<< "Perfil de riesgo: " << arreglo[i].perfilriesgo << endl
-			<< "Teléfono: " << arreglo[i].pretelefono << arreglo[i].telefono << endl << endl;
+			<< "Teléfono: " << arreglo[i].pretelefono << arreglo[i].telefono << endl << endl << "test";
 	}
 
 
