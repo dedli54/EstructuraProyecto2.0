@@ -1023,6 +1023,7 @@ BOOL CALLBACK CARNET(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		PostQuitMessage(117);
 	}break;
 	case WM_COMMAND: {
+		
 		switch (LOWORD(wParam)) {
 		case IDD_CARNET_LISTA: {
 			switch (HIWORD(wParam)) {
@@ -1135,7 +1136,6 @@ BOOL CALLBACK AGREGARCARNET(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 			AgregarCarnet(nodouse);
 			MessageBox(hwnd, "Vacuna agregada al carnet", "AVISO", MB_OK | MB_ICONEXCLAMATION);
-
 			EndDialog(hwnd, 0);
 			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, MAINMENU);
 		}break;
