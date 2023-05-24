@@ -869,7 +869,7 @@ BOOL CALLBACK EDITARPERSONAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 			strcpy_s(aux->foto, copiarfoto);
 			MessageBox(hwnd, "Informacion modificada", "AVISO", MB_OK | MB_ICONEXCLAMATION);
 			EndDialog(hwnd, 0);
-			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, MAINMENU);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, REGISTROPERSONAS);
 		}break;
 		case IDD_EDITARPERSONAS_MODIFICARIMAGENBTN: {
 			OPENFILENAME ofn;
@@ -1265,7 +1265,7 @@ BOOL CALLBACK MAINMENU(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			heapSort(arreglo, contadorCARNET);
 			escribirTxtCarnet(wParam, hWnd, contadorCARNET, arreglo);
 			delete[] arreglo;
-			MessageBox(hWnd, "Reporte carnet guardado", "AVISO", MB_OK | MB_ICONINFORMATION);
+			MessageBox(hWnd, "Reporte nombres  guardado", "AVISO", MB_OK | MB_ICONINFORMATION);
 		}break;
 		case IDC_MENU_REPORTECAR: {
 				int contadorNOMBRE = contarNombres();
@@ -1274,7 +1274,7 @@ BOOL CALLBACK MAINMENU(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				quickSort(arregloquick, 0, contadorNOMBRE - 1);
 				escribirTxtNombre(wParam, hWnd, contadorNOMBRE, arregloquick);
 				delete[] arregloquick;
-				MessageBox(hWnd, "Reporte nombres guardado", "AVISO", MB_OK | MB_ICONINFORMATION);
+				MessageBox(hWnd, "Reporte carnet guardado", "AVISO", MB_OK | MB_ICONINFORMATION);
 			}break;
 		case IDC_MENU_CARNET: {
 			EndDialog(hwnd, 0);
