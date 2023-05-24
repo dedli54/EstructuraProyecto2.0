@@ -571,7 +571,7 @@ BOOL CALLBACK BAJADEVACUNAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 			}
 			MessageBox(hwnd, "Vacuna eliminada", "AVISO", MB_OK | MB_ICONEXCLAMATION);
 			EndDialog(hwnd, 0);
-			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, REGISTROPERSONAS);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, MAINMENU);
 
 		}break;
 		}
@@ -635,7 +635,7 @@ BOOL CALLBACK EDITARVACUNAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 			MessageBox(hwnd, "Informacion modificada", "AVISO", MB_OK | MB_ICONEXCLAMATION);
 			EndDialog(hwnd, 0);
-			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, REGISTROPERSONAS);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, MAINMENU);
 
 		}break;
 		}
@@ -774,7 +774,7 @@ BOOL CALLBACK BORRARPERSONAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 			cuantashay = cuantashay - 1;
 			MessageBox(hwnd, "Persona eliminada", "AVISO", MB_OK | MB_ICONEXCLAMATION);
 			EndDialog(hwnd, 0);
-			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, REGISTROPERSONAS);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, MAINMENU);
 
 		}break;
 		}
@@ -869,7 +869,7 @@ BOOL CALLBACK EDITARPERSONAS(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 			strcpy_s(aux->foto, copiarfoto);
 			MessageBox(hwnd, "Informacion modificada", "AVISO", MB_OK | MB_ICONEXCLAMATION);
 			EndDialog(hwnd, 0);
-			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, REGISTROPERSONAS);
+			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, MAINMENU);
 		}break;
 		case IDD_EDITARPERSONAS_MODIFICARIMAGENBTN: {
 			OPENFILENAME ofn;
