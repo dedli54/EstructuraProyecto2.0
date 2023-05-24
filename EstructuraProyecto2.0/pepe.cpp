@@ -1134,6 +1134,8 @@ BOOL CALLBACK AGREGARCARNET(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 			GetDlgItemText(hwnd, IDD_AGREGARCARNET_PROXANIO, nodouse->fechaprox.anio, 5);
 
 			AgregarCarnet(nodouse);
+			MessageBox(hwnd, "Vacuna agregada al carnet", "AVISO", MB_OK | MB_ICONEXCLAMATION);
+
 			EndDialog(hwnd, 0);
 			DialogBox(instGlobal, MAKEINTRESOURCE(IDD_MAIN_MENU), hwnd, MAINMENU);
 		}break;
